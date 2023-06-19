@@ -1,0 +1,49 @@
+<div class="all">
+    <h1>おいも RECIPE投稿一覧</h1>
+
+  <div class="link">
+        <%= link_to 'トップページ', oimos_top_path, class:"btn btn-malformation btn-malformation--pastel" %>
+        <%= link_to 'shop投稿一覧', oimos_path, class:"btn btn-malformation btn-malformation--pastel" %>
+
+        <%= link_to "shop新規投稿ページ", oimos_shop_new_path, class:"btn btn-malformation btn-malformation--pastel" %>
+
+        <%= link_to "recipe新規投稿ページ", new_potato_path, class:"btn btn-malformation btn-malformation--pastel" %>
+  </div>
+
+    <div class="potatos-containor">
+        <% @potatos.each do |t| %>
+            <div class="potato">
+
+                <%= image_tag t.image_url, size: "250x200" if t.image? %>
+
+                <%= t.recipe_name %>
+                <%= t.recipe_about %>
+
+                <%= link_to t.user.name, user_path(t.user.id) %> 
+                <%= t.user.email %>
+
+                <% if user_signed_in? %>
+                <% if current_user.already_liked?(t) %>
+                    <%= link_to potato_like_path(id: t.id, potato_id: t.id), method: :delete do %>
+                        <i class="fas fa-heart"></i><%= t.likes.count %>
+                        <p>いいねを取り消す</p><%= t.likes.count %>
+                    <% end %>
+                <% else %>
+                    <%= link_to potato_likes_path(id: t.id, potato_id: t.id), method: :post do %>
+                        <i class="far fa-heart"></i><%= t.likes.count %>
+                        <p>いいね</p><%= t.likes.count %>
+                    <% end %>
+                <% end %>
+                <% else %>
+                <i class="far fa-heart"></i><%= t.likes.count %>
+                <p>いいねの数 = </p><%= t.likes.count %>
+                <% end %>
+
+                <%= link_to "詳細へ", potato_path(t.id) %>
+                <%= link_to "編集する", edit_potato_path(t.id) %>
+                <%= button_to "削除する", potato_path(t.id), method: :delete %>
+            </div>
+        <% end %>
+    </div>
+
+</div>

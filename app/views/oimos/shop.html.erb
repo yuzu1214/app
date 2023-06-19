@@ -1,0 +1,43 @@
+<h1>おいも お店投稿一覧</h1>
+
+<%= link_to 'お店投稿一覧', oimos_path, class:"btn btn-malformation btn-malformation--pastel" %>
+<%= link_to 'レシピ投稿一覧', potatos_path, class:"btn btn-malformation btn-malformation--pastel" %>
+
+<%= link_to "shop新規投稿ページ", oimos_shop_new_path, class:"btn btn-malformation btn-malformation--pastel" %>
+
+<%= link_to "recipe新規投稿ページ", new_potato_path, class:"btn btn-malformation btn-malformation--pastel" %>
+
+<% @shop.each do |t| %>
+    <div class="oimo">
+
+      <%= image_tag t.image_url, size: "250x200" if t.image? %>
+
+      <%= t.shop_name %>
+      <%= t.adresses %>
+      <%= t.shop_about %>
+
+      <%= link_to t.user.name, user_path(t.user.id) %> 
+      <%= t.user.email %>
+
+      <% if user_signed_in? %>
+      <% if current_user.already_liked?(t) %>
+          <%= link_to oimo_like_path(id: t.id, oimo_id: t.id), method: :delete do %>
+              <i class="fas fa-heart"></i><%= t.likes.count %>
+              <p>いいねを取り消す</p>
+          <% end %>
+      <% else %>
+          <%= link_to oimo_likes_path(id: t.id, oimo_id: t.id), method: :post do %>
+              <i class="far fa-heart"></i><%= t.likes.count %>
+          <% end %>
+      <% end %>
+  <% else %>
+      <i class="far fa-heart"></i><%= t.likes.count %>
+      <p>いいねの数 = </p><%= t.likes.count %>
+  <% end %>
+
+    <%= link_to "詳細へ", oimo_path(t.id) %>
+    <%= link_to "編集する", edit_oimo_path(t.id) %>
+    <%= button_to "削除する", oimo_path(t.id), method: :delete %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,40 @@
+<div class="recipenew">
+  <h1>新規のおいも<h1>
+  <h3>RECIPE<h3>
+ <div class="link">
+    <%= link_to "トップページ", oimos_top_path, class:"btn btn-malformation btn-malformation--pastel" %>
+    <%= link_to 'shop投稿一覧', oimos_path, class:"btn btn-malformation btn-malformation--pastel" %>
+    <%= link_to 'recipe投稿一覧', potatos_path, class:"btn btn-malformation btn-malformation--pastel" %>
+    <%= link_to "shop新規投稿ページ", oimos_shop_new_path, class:"btn btn-malformation btn-malformation--pastel" %>
+    <%= form_for @potato do |f| %>
+ </div>
+
+    <div class="form">
+
+      <div class="name">
+        <%= f.label :recipe_name %>
+        <%= f.text_field :recipe_name, :size => 30 %>
+      </div>
+    
+      <div class="about">
+        <%= f.label :recipe_about  %>
+        <%= f.text_area :recipe_about, :size => "30x2" %>
+      </div>
+    
+      <div class="recipeimage">
+        <%= f.label :image %>
+        <%= f.file_field :image %>
+      </div>
+
+
+      <%= form_with(model: @potato, url: potatos_path, local: true) do |f| %>
+        <p>半角スペースを入力することで複数のタグを付けることができます。</p>
+        <%= f.text_field :tag_name, placeholder: "Ruby Python Java" %>
+        <%= f.submit "投稿する" %>
+      <% end %>
+      
+      <% end %>
+      </div>
+      <%= link_to "一覧に戻る", potatos_path %>
+     
+</div>

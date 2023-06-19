@@ -1,0 +1,23 @@
+<div class="edit">
+    <%= link_to 'トップページ', oimos_top_path, class:"btn btn-malformation btn-malformation--pastel" %>
+    <%= link_to 'shop投稿一覧', oimos_path, class:"btn btn-malformation btn-malformation--pastel" %>
+    <%= link_to 'recipe投稿一覧', potatos_path, class:"btn btn-malformation btn-malformation--pastel" %>
+
+    <%= link_to "shop新規投稿ページ", oimos_shop_new_path, class:"btn btn-malformation btn-malformation--pastel" %>
+
+    <%= link_to "recipe新規投稿ページ", new_potato_path, class:"btn btn-malformation btn-malformation--pastel" %>
+    <%= form_for @potato do |f| %>
+    <div class="form">
+        <%= f.label :body %>
+        <%= f.text_field :recipe_name, :size => 40 %> 
+
+        <div class="field">
+            <%= f.label"タグ (スペースで区切ると複数タグ登録できます)" %>
+            <%= f.text_field :tag_name, value: @tag_list,class:"form-control"%>
+        </div>
+
+        <%= f.submit "編集する" %>
+    </div>
+
+    <% end %>
+</div>

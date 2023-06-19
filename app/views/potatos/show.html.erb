@@ -1,0 +1,66 @@
+<div class="detail">
+  <h1>おいも</h1>
+  <h3>おいも詳細</h3>
+  <div class="potato">
+    <p><%= @potato.recipe_name %></p>
+    <p><%= @potato.recipe_about %></p>
+    <p><%= @potato.created_at %></p>
+    <% if user_signed_in? %>
+    <% if current_user.already_liked?(@potato) %>
+      <%= link_to potato_like_path(@potato), method: :delete do %>
+        <i class="far fa-heart"></i><%= @potato.likes.count %>
+        <p>いいねを取り消す</p><%= @potato.likes.count %>
+      <% end %>
+    <% else %>
+      <%= link_to potato_likes_path(@potato), method: :post do %>
+        <p>いいね</p><%= @potato.likes.count %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <i class="far fa-heart"></i><%= @potato.likes.count %>
+    <p>いいねの数 = </p><%= @potato.likes.count %>
+  <% end %>
+  <%= link_to "編集する", edit_potato_path(@potato.id) %>
+  </div>
+
+  <h2>いいねしたユーザー</h2>
+  <% @potato.liked_users.each do |user| %>
+  <li><%= user.email %></li>
+  <% end %>  
+  </div>
+
+  <div class="comment-wrapper">
+    <p>コメント一覧</p>
+    <% @comments.each do |c| %>
+      <div>
+        <%= c.user.email unless c.user.blank? %>
+        <br>
+        <%= c.content %>
+      </div>
+        <br>
+      <% if user_signed_in? && current_user.id == c.user_id %>
+        <%= button_to "削除する", potato_comments_path(c.id), method: :delete %>
+    <% end %>
+    <% end %>
+
+    <% if user_signed_in? %>
+      <%= form_with(model: [@potato, @comment], local: true) do |f| %>
+        <%= f.text_area :content %>
+        <%= button_tag type: "submit" do %>
+          <i class="far fa-comments"></i> コメントする
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= link_to "おいも一覧に戻る", potatos_path %>
+  <%= link_to "編集する", edit_potato_path(@potato.id) %>
+
+  <% @potato_tags.each do |tag| %>
+    <% if tag.potatos.count > 0 %>
+    <i class="fas fa-paperclip"></i>
+      <%= link_to tag.tag_name, tag_potatos_path(tag_id: tag.id) %>
+      <%= "(#{tag.potatos.count})" %>
+    <% end %>
+  <% end %>
+</div>

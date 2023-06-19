@@ -1,0 +1,82 @@
+<div class="all">  
+  <div class = "link" >
+    <%= link_to 'shop投稿一覧', oimos_path, class:"btn btn-malformation btn-malformation--pastel" %>
+    <%= link_to 'recipe投稿一覧', potatos_path, class:"btn btn-malformation btn-malformation--pastel" %>
+
+    <%= link_to "shop新規投稿ページ", oimos_shop_new_path, class:"btn btn-malformation btn-malformation--pastel" %>
+
+    <%= link_to "recipe新規投稿ページ", new_potato_path, class:"btn btn-malformation btn-malformation--pastel" %>
+
+  </div>
+
+  <h3>タグを検索</h3>
+  <%= form_tag({controller:"oimos",action:"top"}, method: :get) do %>
+      <%= text_field_tag :search %>
+      <%= submit_tag '検索する'  %>
+  <% end %>
+  <br>
+
+  <h3>タグ一覧</h3>
+  <% @tag_list.each do |list| %>
+    <div class = 'tag一覧' >
+    <i class="fas fa-paperclip"></i>
+      <%= "(#{list.oimos.count})" %>
+    </div>
+  <% end %>
+
+  <div class="silk">
+    <div class="black">
+    </div>
+    <div class="white">
+    </div>
+    <%= image_tag 'silksweet.jpg', class: 'silksweet' %><br>
+    <div class="silktitle">
+      <h3>シルクスイート</h3>
+    </div>
+    <div class="silkexplain">
+      <p>新しい新種でありますが、他の新種に比べ10分の1程度のため、
+      「幻のさつまいも」と評されることもあります。
+      外観は紡錘形で、“ザ・さつまいも”のようなフィルム。
+      寝かせた時間によって、ホクホク食感とねっとり食感を楽しめる面白い新種です。</p>
+    </div>
+  </div><br>
+  
+
+  <div class="annnou">
+    <div class="black">
+    </div>
+    <div class="white">
+    </div>
+    <%= image_tag 'annnouimo.jpg', class: 'annnouimo' %><br>
+    <div class="annnoutitle">
+      <h3>安納芋</h3>
+    </div>
+    <div class="annnouexplain">
+      <p>水分が多く、ねっとりした粘着性を最大限に引き出せ、焼き芋にした時、
+      密が溢れるほどのねっとりクリーミーな食感になります。
+      生の状態でも糖度が16度程度、時間をかけて焼くことで糖度40度近くまでなるものもある、
+      甘さが売りのおいもです！！</p>
+    </div>
+  </div><br>
+
+  <div class="beni">
+    <div class="black">
+    </div>
+    <div class="white">
+    </div>
+    <%= image_tag 'beniharuka.jpg', class: 'beniharuka' %><br>
+    <div class="benititle">
+      <h3>紅はるか</h3>
+    </div>
+    <div class="beniexplain">
+      <p>他のおいもより「はるかに」美味しいという事で名付けられたほど、
+      芳醇な香りと高糖度で、スイーツ並みの甘味が特徴です。
+      しっとりなめらかな食感と豊富なビタミン・食物繊維で大人気！
+      ねっとり焼き芋が好きな方におすすめ！！</p>
+    </div>  
+  </div><br>
+</div>  
+
+
+
+

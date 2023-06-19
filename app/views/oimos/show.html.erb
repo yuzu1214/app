@@ -1,0 +1,67 @@
+<div class="detail">
+  <h1>おいも</h1>
+  <h3>おいも詳細</h3>
+  <div class="oimo">
+    <p><%= @oimo.shop_name %></p>
+    <p><%= @oimo.adresses %></p>
+    <p><%= @oimo.shop_about %></p>
+    <p><%= @oimo.created_at %></p>
+    <% if user_signed_in? %>
+    <% if current_user.already_liked?(@oimo) %>
+      <%= link_to oimo_like_path(@oimo), method: :delete do %>
+        <i class="far fa-heart"></i><%= @oimo.likes.count %>
+        <p>いいねを取り消す</p><%= @oimo.likes.count %>
+      <% end %>
+    <% else %>
+      <%= link_to oimo_likes_path(@oimo), method: :post do %>
+        <p>いいね</p><%= @oimo.likes.count %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <i class="far fa-heart"></i><%= @oimo.likes.count %>
+    <p>いいねの数 = </p><%= @oimo.likes.count %>
+  <% end %>
+  <%= link_to "編集する", edit_oimo_path(@oimo.id) %>
+  </div>
+
+  <h2>いいねしたユーザー</h2>
+  <% @oimo.liked_users.each do |user| %>
+  <li><%= user.email %></li>
+  <% end %>  
+  </div>
+
+  <div class="comment-wrapper">
+    <p>コメント一覧</p>
+    <% @comments.each do |c| %>
+      <div>
+        <%= c.user.email unless c.user.blank? %>
+        <br>
+        <%= c.content %>
+      </div>
+        <br>
+      <% if user_signed_in? && current_user.id == c.user_id %>
+        <%= button_to "削除する", oimo_comments_path(c.id), method: :delete %>
+    <% end %>
+    <% end %>
+
+    <% if user_signed_in? %>
+      <%= form_with(model: [@oimo, @comment], local: true) do |f| %>
+        <%= f.text_area :content %>
+        <%= button_tag type: "submit" do %>
+          <i class="far fa-comments"></i> コメントする
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= link_to "おいも一覧に戻る", oimos_path %>
+  <%= link_to "編集する", edit_oimo_path(@oimo.id) %>
+
+  <% @oimo_tags.each do |tag| %>
+    <% if tag.oimos.count > 0 %>
+    <i class="fas fa-paperclip"></i>
+      <%= link_to tag.tag_name, tag_oimos_path(tag_id: tag.id) %>
+      <%= "(#{tag.oimos.count})" %>
+    <% end %>
+  <% end %>
+</div>

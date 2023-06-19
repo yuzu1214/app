@@ -1,0 +1,19 @@
+<%= form_for @potato do |f| %>
+
+ <div class="field">
+    <%= f.label :recipe_name %>
+    <%= f.text_field :recipe_name, :size => 30 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :recipe_about  %>
+    <%= f.text_area :recipe_about, :size => "30x2" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :image %>
+    <%= f.file_field :image %>
+  </div>
+
+  
+<% end %>
